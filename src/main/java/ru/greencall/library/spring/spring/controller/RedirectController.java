@@ -2,6 +2,10 @@ package ru.greencall.library.spring.spring.controller;
 
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,7 +30,8 @@ public class RedirectController {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String baseUrlRedirect(HttpServletRequest request, HttpServletResponse httpServletResponse) {
 
-        bookRepository.findByNameContainingIgnoreCaseOrAuthorFioContainingIgnoreCaseOrderByName("г", "наб");
+        Page<Author> pageList = authorRepository.findByFioContainingIgnoreCaseOrderByFio("д", PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "fio")));
+//        bookRepository.findByNameContainingIgnoreCaseOrAuthorFioContainingIgnoreCaseOrderByName("г", "наб");
         return "ok";
     }
 }
